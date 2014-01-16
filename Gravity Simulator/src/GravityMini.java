@@ -9,7 +9,7 @@ public class GravityMini extends Force {
 		return SCALE * massA * massB * Math.log(distance);
 	}
  	public double centrifugal(double distance, double mass){
-		return  Math.sqrt(SCALE*mass*distance*Math.log(distance));
+		return  Math.sqrt(SCALE*mass);
 	}
 }
 
