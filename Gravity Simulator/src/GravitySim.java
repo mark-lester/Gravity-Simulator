@@ -69,7 +69,7 @@ public class GravitySim extends JPanel implements ActionListener {
 		g.setFont(new Font("Courier New", Font.PLAIN, 12));
 		StringBuilder sb = new StringBuilder();
 		Formatter formatter = new Formatter(sb);
-		formatter.format("**PRESS JUST ABOUT ANY KEY ** %s: o %d :gain(%6.0f->%6.0f)%6.0f:k %6.0f:p %6.0f:l %d",
+		formatter.format("**PRESS JUST ALMOST ANY KEY ** %s: o %d :gain(%6.0f->%6.0f)%6.0f:k %6.0f:p %6.0f:l %d",
                                 gravity.getClass().getName(),
 				this.solarSystem.numberOfPlanets,
 				bot_loss,
