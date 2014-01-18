@@ -20,6 +20,7 @@ public class GravitySim extends JPanel implements ActionListener {
 	private static boolean centrifugal_flag=true;
 	private static boolean sun_flag=true;
 	private static double sun_size=50000;
+	private static boolean random_radii_flag=true;
 	public String forceName="Normal";
 	public Force gravity=null;
 	double top_loss=0;
@@ -85,28 +86,31 @@ public class GravitySim extends JPanel implements ActionListener {
 
    public boolean Dialogue(){
 	boolean change=false;
-		String[] force_names = {"Normal", "SHM","Mini","Constant","Log","Super","Super3"};
+		String[] force_names = {"InverseCube","Normal", "Mini","Sqrt","Constant","Log","SHM","Super","Super3"};
     		JComboBox force_names_field = new JComboBox(force_names);
 		    force_names_field.setSelectedItem(forceName);
     		JTextField numberOfPlanets_field = new JTextField(Integer.toString(this.numberOfPlanets));
     		JTextField averageEnergy_field = new JTextField(Integer.toString(this.averageEnergy));
     		JTextField sun_size_field = new JTextField(Double.toString(this.sun_size));
     		JCheckBox centrifugal_flag_field = new JCheckBox("Centrifugal");
-		centrifugal_flag_field.setSelected(this.centrifugal_flag);
+    		centrifugal_flag_field.setSelected(this.centrifugal_flag);
     		JCheckBox sun_flag_field = new JCheckBox("Sun");
-		sun_flag_field.setSelected(this.sun_flag);
+    		sun_flag_field.setSelected(this.sun_flag);
+    		JCheckBox random_radii_flag_field = new JCheckBox("Random");
+    		random_radii_flag_field.setSelected(this.random_radii_flag);
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
-		panel.add(new JLabel("Gravity Type"));
+		panel.add(new JLabel("Gravity Type (select your own gravity)"));
 		panel.add(force_names_field);
 		panel.add(new JLabel("Number of Planets"));
 		panel.add(numberOfPlanets_field);
-		panel.add(new JLabel("Average Energy"));
+		panel.add(new JLabel("Average Energy (increase to go faster)"));
 		panel.add(averageEnergy_field);
 		panel.add(centrifugal_flag_field);
 		panel.add(sun_flag_field);
-		panel.add(new JLabel("Sun Size"));
+		panel.add(new JLabel("Sun Size (increase to stablise solar system"));
 		panel.add(sun_size_field);
+		panel.add(random_radii_flag_field);
 		
 		int result = JOptionPane.showConfirmDialog(this, panel, "Solar System Configuration",
 					        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -117,6 +121,8 @@ public class GravitySim extends JPanel implements ActionListener {
 			centrifugal_flag=centrifugal_flag_field.isSelected();
 			sun_flag=sun_flag_field.isSelected();
 			sun_size = Double.parseDouble(sun_size_field.getText());
+			random_radii_flag=random_radii_flag_field.isSelected();
+
 			change=true;
 		}
 		return change;
@@ -124,17 +130,20 @@ public class GravitySim extends JPanel implements ActionListener {
 
    private void SetSolarSystem(){
 	switch (forceName){
+		case "InverseCube":
+			gravity=new GravityInverseCube();
+			break;
 		case "Normal":
 			gravity=new GravityNormal();
+			break;
+		case "Sqrt":
+			gravity=new GravitySqrt();
 			break;
 		case "SHM":
 			gravity=new GravitySHM();
 			break;
 		case "Mini":
 			gravity=new GravityMini();
-			break;
-		case "Constant":
-			gravity=new GravityConstant();
 			break;
 		case "Log":
 			gravity=new GravityLog();
@@ -147,7 +156,7 @@ public class GravitySim extends JPanel implements ActionListener {
 			break;
 	}
 	top_loss=bot_loss=0;
-	this.solarSystem = new SolarSystem(numberOfPlanets, BOX_HEIGHT,BOX_WIDTH,gravity,centrifugal_flag,averageEnergy,sun_flag,sun_size);
+	this.solarSystem = new SolarSystem(numberOfPlanets, BOX_HEIGHT,BOX_WIDTH,gravity,centrifugal_flag,averageEnergy,sun_flag,sun_size,random_radii_flag);
    }
 
 
