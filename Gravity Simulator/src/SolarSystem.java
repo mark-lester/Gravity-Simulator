@@ -15,6 +15,7 @@ public class SolarSystem {
 	public int numberOfPlanets = 0;
 	public double sun_size=500000;
 	public boolean sun_flag = true;
+	public boolean random_radii_flag = true;
 	public boolean centrifugal_flag = false;
 	public boolean solar_system_flag = false;
 	public double averageEnergy=1000;
@@ -36,7 +37,8 @@ public class SolarSystem {
 			boolean centrifugal_flag,
 			double averageEnergy,
 			boolean sun_flag,
-			double sun_size){
+			double sun_size,
+			boolean random_radii_flag){
 
 		int i,j;
 		Color colour;
@@ -55,6 +57,7 @@ public class SolarSystem {
 		this.averageEnergy = averageEnergy;
 		this.centrifugal_flag = centrifugal_flag;
 		this.sun_flag = sun_flag;
+		this.random_radii_flag = random_radii_flag;
 		this.sun_size = sun_size;
 		this.planets = new Planet[numberOfPlanets];
 		this.gravity=gravity;
@@ -67,20 +70,24 @@ public class SolarSystem {
 
 			x = (Math.random()*width % (width/2)) + (width/4);
 			y = (Math.random()*width % (height/2)) + (height/4);
-			radius = (Math.random()*width % 15) + 1;
+			if (random_radii_flag) {
+				radius = (Math.random()*width % 15) + 1;
+			} else {
+				radius = 5;
+			}
 			colour=new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
 
 			// Set the first two up at nice spots and sizes, handy for debugging force behaviour
 			if (i == 0){
 				x = 3 * width / 8 ;
 				y = 3 * height / 8;
-				radius = 10;
+				radius = 5;
 				colour=Color.YELLOW;
 			}
 			if (i == 1){
 				x = 5 * width / 8;
 				y = 5 * height / 8;
-				radius = 10;
+				radius = 5;
 				colour=Color.GREEN;
 			}
 
