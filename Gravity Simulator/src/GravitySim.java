@@ -86,7 +86,7 @@ public class GravitySim extends JPanel implements ActionListener {
 
    public boolean Dialogue(){
 	boolean change=false;
-		String[] force_names = {"InverseCube","Normal", "Mini","Sqrt","Constant","Log","SHM","Super","Super3"};
+		String[] force_names = {"InverseCube","Normal", "Mini","Sqrt","Sin","Constant","Log","SHM","Super","Super3"};
     		JComboBox force_names_field = new JComboBox(force_names);
 		    force_names_field.setSelectedItem(forceName);
     		JTextField numberOfPlanets_field = new JTextField(Integer.toString(this.numberOfPlanets));
@@ -130,7 +130,11 @@ public class GravitySim extends JPanel implements ActionListener {
 
    private void SetSolarSystem(){
 	switch (forceName){
-		case "InverseCube":
+		case "Sin":
+			gravity=new GravitySin();
+			gravity.solar_system_scale=BOX_WIDTH/8;
+			break;
+	case "InverseCube":
 			gravity=new GravityInverseCube();
 			break;
 		case "Normal":
@@ -155,6 +159,7 @@ public class GravitySim extends JPanel implements ActionListener {
 			gravity=new GravitySuper3();
 			break;
 	}
+
 	top_loss=bot_loss=0;
 	this.solarSystem = new SolarSystem(numberOfPlanets, BOX_HEIGHT,BOX_WIDTH,gravity,centrifugal_flag,averageEnergy,sun_flag,sun_size,random_radii_flag);
    }

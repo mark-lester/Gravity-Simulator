@@ -101,17 +101,16 @@ public class SolarSystem {
 				colour = Color.WHITE;
 			}
 			this.planets[i] = new Planet(x,y,radius,mass,colour);
-	
 			this.total_mass += mass;
 			this.centreOfMass.posX = this.centre_of_mass_x+=(mass/total_mass)*(x-centre_of_mass_x);
 			this.centreOfMass.posY = this.centre_of_mass_y+=(mass/total_mass)*(y-centre_of_mass_y);
 	    	}
 
-		// do a dummy run to add up the potential eneGrgy at start
+		// do a dummy run to add up the potential energy at start
 
 		for(i = 0; i < this.numberOfPlanets; i++) {
 			for(j = i +1 ; j < this.numberOfPlanets; j++) {
-				this.potentialEnergy += this.planets[i].Attract(this.planets[j],gravity);
+				this.potentialEnergy += Math.abs(this.planets[i].Attract(this.planets[j],gravity));
 			}
 			// zap the velocity and acceleration back to zero after the dummy run to get the potential
 			this.planets[i].velocityX=0;
@@ -122,7 +121,7 @@ public class SolarSystem {
 
 		// now we know the total energy, we can scale 
 		// else when you bump up the number of planets, 
-		// the energy in the system goes exponetially up and the animation goes bonkers.
+		// the energy in the system goes exponentially up and the animation goes bonkers.
 		Force.SCALE = averageEnergy * numberOfPlanets/this.potentialEnergy;
 		this.potentialEnergy=averageEnergy * numberOfPlanets;
 

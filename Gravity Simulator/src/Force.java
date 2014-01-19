@@ -1,5 +1,7 @@
 public class Force {
 public static double SCALE=1;
+public double solar_system_scale=1;
+
  	public double force(double distance, double massA, double massB,double combined_radii){
 		return 0;
 	}
