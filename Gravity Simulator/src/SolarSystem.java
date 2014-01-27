@@ -73,7 +73,7 @@ public class SolarSystem {
 		
 		if (!this.random_position_flag){
 			number_per_row = (int) Math.sqrt(numberOfPlanets * width / height);
-			spacing = width / number_per_row;
+			spacing = width / (2 * number_per_row);
 		}
 
 		for(i = 0; i < numberOfPlanets; i++) {
@@ -83,8 +83,8 @@ public class SolarSystem {
 				x = (Math.random()*width % (width/2)) + (width/4);
 				y = (Math.random()*width % (height/2)) + (height/4);
 			} else {
-				x = (i % number_per_row) * spacing;
-				y = (int)(i / number_per_row) * spacing;
+				x = (width/4) + (i % number_per_row) * spacing;
+				y = (height/4) + (int)(i / number_per_row) * spacing;
 			}
 			if (random_radii_flag) {
 				radius = (Math.random()*width % 15) + 1;
