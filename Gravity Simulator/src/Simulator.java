@@ -22,6 +22,7 @@ public class Simulator extends JPanel implements ActionListener {
 	private static double sun_size=50000;
 	private boolean random_radii_flag=true;
 	private boolean random_position_flag=true;
+	private boolean random_colour_flag=true;
 	public String forceName="Normal";
 	public Force gravity=null;
 	double top_loss=0;
@@ -101,6 +102,8 @@ public class Simulator extends JPanel implements ActionListener {
     		random_radii_flag_field.setSelected(this.random_radii_flag);
     		JCheckBox random_position_flag_field = new JCheckBox("Random Position");
     		random_position_flag_field.setSelected(this.random_position_flag);
+    		JCheckBox random_colour_flag_field = new JCheckBox("Random Colour");
+    		random_colour_flag_field.setSelected(this.random_colour_flag);
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		panel.add(new JLabel("Gravity Type (select your own gravity)"));
@@ -115,6 +118,7 @@ public class Simulator extends JPanel implements ActionListener {
 		panel.add(sun_size_field);
 		panel.add(random_radii_flag_field);
 		panel.add(random_position_flag_field);
+		panel.add(random_colour_flag_field);
 		
 		int result = JOptionPane.showConfirmDialog(this, panel, "Solar System Configuration",
 					        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -127,6 +131,7 @@ public class Simulator extends JPanel implements ActionListener {
 			sun_size = Double.parseDouble(sun_size_field.getText());
 			random_radii_flag=random_radii_flag_field.isSelected();
 			random_position_flag=random_position_flag_field.isSelected();
+			random_colour_flag=random_colour_flag_field.isSelected();
 
 			change=true;
 		}
@@ -169,7 +174,17 @@ public class Simulator extends JPanel implements ActionListener {
 	}
 
 	top_loss=bot_loss=0;
-	this.solarSystem = new SolarSystem(numberOfPlanets, BOX_HEIGHT,BOX_WIDTH,gravity,centrifugal_flag,averageEnergy,sun_flag,sun_size,random_radii_flag,random_position_flag);
+	this.solarSystem = new SolarSystem(numberOfPlanets, 
+								BOX_HEIGHT,
+								BOX_WIDTH,
+								gravity,
+								centrifugal_flag,
+								averageEnergy,
+								sun_flag,
+								sun_size,
+								random_radii_flag,
+								random_position_flag,
+								random_colour_flag);
    }
 
 

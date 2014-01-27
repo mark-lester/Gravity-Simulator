@@ -9,6 +9,7 @@ public class Planet {
 	public double mass = 0;
 	public double deltaVelocityX = 0;
 	public double deltaVelocityY = 0;
+	public double potential;
 	public Color colour; 
 
 	public Planet (double x,double y,double radius,double mass, Color colour){

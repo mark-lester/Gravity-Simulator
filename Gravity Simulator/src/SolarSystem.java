@@ -41,7 +41,8 @@ public class SolarSystem {
 			boolean sun_flag,
 			double sun_size,
 			boolean random_radii_flag,
-			boolean random_position_flag){
+			boolean random_position_flag,
+			boolean random_colour_flag){
 
 		int i,j;
 		int number_per_row=0;
@@ -123,11 +124,21 @@ public class SolarSystem {
 	    	}
 
 		// do a dummy run to add up the potential energy at start
+		double potential_minimum=0;
+		double potential_maximum=0;
 
 		for(i = 0; i < this.numberOfPlanets; i++) {
 			for(j = i +1 ; j < this.numberOfPlanets; j++) {
-				this.potentialEnergy += Math.abs(this.planets[i].Attract(this.planets[j],gravity));
+				double this_potential=0;
+				this.potentialEnergy += (this_potential=Math.abs(this.planets[i].Attract(this.planets[j],gravity)));
+				this.planets[i].potential+=this_potential;
+				this.planets[j].potential+=this_potential;
 			}
+			if (i == 0){potential_minimum = this.planets[i].potential;} 
+			potential_minimum= Math.min(potential_minimum, this.planets[i].potential);
+			if (i == 0){potential_maximum = this.planets[i].potential;} 
+			potential_maximum= Math.max(potential_maximum, this.planets[i].potential);	
+
 			// zap the velocity and acceleration back to zero after the dummy run to get the potential
 			this.planets[i].velocityX=0;
 			this.planets[i].velocityY=0;
@@ -168,10 +179,18 @@ public class SolarSystem {
 					(planets[i].velocityY * planets[i].velocityY) * 
 					planets[i].mass/2 ;
 		}
-
+		if (!random_colour_flag){  
+			for(i = 0; i < numberOfPlanets-1; i++) {
+				double hue = (planets[i].potential - potential_minimum) / ( potential_maximum - potential_minimum);
+				double bright = 0.5 + ( (planets[i].potential - potential_minimum) / ( potential_maximum - potential_minimum)) * 0.5;
+				
+				planets[i].colour=new Color(Color.HSBtoRGB((float)hue,(float)1,(float)bright));
+			}
+		}
+		
 		this.originalEnergy=this.potentialEnergy+this.kineticEnergy;
 	}
-
+	
 	public void Animate(){
 		int i,j;
 
