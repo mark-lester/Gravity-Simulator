@@ -16,13 +16,15 @@ public class SolarSystem {
 	public double sun_size=500000;
 	public boolean sun_flag = true;
 	public boolean random_radii_flag = true;
+	public boolean random_position_flag = true;
 	public boolean centrifugal_flag = false;
 	public boolean solar_system_flag = false;
 	public double averageEnergy=1000;
 	private Force gravity;
+	private int spacing = 0;
 	public SolarSystem solarSystem;
 
-	public void Draw(GravitySim gs, Graphics g) { 
+	public void Draw(Simulator gs, Graphics g) { 
 		for(int i = 0; i < numberOfPlanets; i++) {
 			this.planets[i].Draw(gs,g);
 		}
@@ -38,9 +40,11 @@ public class SolarSystem {
 			double averageEnergy,
 			boolean sun_flag,
 			double sun_size,
-			boolean random_radii_flag){
+			boolean random_radii_flag,
+			boolean random_position_flag){
 
 		int i,j;
+		int number_per_row=0;
 		Color colour;
 
 		total_mass = 0;
@@ -51,6 +55,7 @@ public class SolarSystem {
 		kineticEnergy = 0;
 		momentumX = 0;
 		momentumY = 0;
+		spacing = 0;
 		Force.SCALE=1;
 
 		this.numberOfPlanets = numberOfPlanets;
@@ -58,18 +63,29 @@ public class SolarSystem {
 		this.centrifugal_flag = centrifugal_flag;
 		this.sun_flag = sun_flag;
 		this.random_radii_flag = random_radii_flag;
+		this.random_position_flag = random_position_flag;
 		this.sun_size = sun_size;
 		this.planets = new Planet[numberOfPlanets];
 		this.gravity=gravity;
 
 		colour=Color.RED;
-		this.centreOfMass = new Planet(0,0,5,0,colour);
+		this.centreOfMass = new Planet(0,0,8,0,colour);
+		
+		if (!this.random_position_flag){
+			number_per_row = (int) Math.sqrt(numberOfPlanets * width / height);
+			spacing = width / number_per_row;
+		}
 
 		for(i = 0; i < numberOfPlanets; i++) {
 			double x,y,radius,mass;
 
-			x = (Math.random()*width % (width/2)) + (width/4);
-			y = (Math.random()*width % (height/2)) + (height/4);
+			if (this.random_position_flag){
+				x = (Math.random()*width % (width/2)) + (width/4);
+				y = (Math.random()*width % (height/2)) + (height/4);
+			} else {
+				x = (i % number_per_row) * spacing;
+				y = (int)(i / number_per_row) * spacing;
+			}
 			if (random_radii_flag) {
 				radius = (Math.random()*width % 15) + 1;
 			} else {

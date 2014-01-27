@@ -21,7 +21,7 @@ public class Planet {
 		this.velocityY=0;
    	}
 
-	public void Draw(GravitySim gs, Graphics g){
+	public void Draw(Simulator gs, Graphics g){
 		gs.DrawPlanet(g,(int)this.posX,(int)this.posY,(int)this.radius,this.colour);
 	}
 
