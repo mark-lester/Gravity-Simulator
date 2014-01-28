@@ -9,10 +9,6 @@ public class GravitySqrt extends Force {
  		distance=Math.max((double)1, distance);
 		return SCALE * massA * massB * distance * Math.sqrt(distance) * 2 /3 ;
 	}
- 	public double centrifugal(double distance, double mass){
-		distance=Math.max((double)1,distance);
-		return  Math.sqrt(SCALE*mass*distance*Math.sqrt(distance));
-	}
 }
 
 	

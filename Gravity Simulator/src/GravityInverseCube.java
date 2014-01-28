@@ -8,7 +8,4 @@ public class GravityInverseCube extends Force {
  		distance=Math.max((double)1, distance);
 		return (SCALE * massA * massB) / (2 * distance * distance);
 	}
- 	public double centrifugal(double distance, double mass){
-		return Math.sqrt(SCALE*mass/(distance*distance));
-	}
 }

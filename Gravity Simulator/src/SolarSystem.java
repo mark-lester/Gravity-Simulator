@@ -166,7 +166,7 @@ public class SolarSystem {
 				double distCoM = Math.sqrt(
 					(planets[i].posY - centre_of_mass_y) * (planets[i].posY - centre_of_mass_y) +
 					(planets[i].posX - centre_of_mass_x) * (planets[i].posX - centre_of_mass_x));
-				double v=gravity.centrifugal(distCoM,sun_size);
+				double v=gravity.Centrifugal(distCoM,planets[i].mass,sun_size);
 
 				planets[i].velocityX += (planets[i].posY - centre_of_mass_y) * v / distCoM;
 				planets[i].velocityY +=-(planets[i].posX - centre_of_mass_x) * v / distCoM;

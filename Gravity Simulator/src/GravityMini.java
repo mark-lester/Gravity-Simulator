@@ -8,8 +8,5 @@ public class GravityMini extends Force {
  		distance=Math.max((double)1, distance);
 		return SCALE * massA * massB * Math.log(distance);
 	}
- 	public double centrifugal(double distance, double mass){
-		return  Math.sqrt(SCALE*mass);
-	}
-}
+ }
 

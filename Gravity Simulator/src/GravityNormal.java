@@ -8,9 +8,5 @@ public class GravityNormal extends Force {
  		distance=Math.max((double)1, distance);
  		return SCALE * massA * massB / distance;
 	}
- 	public double centrifugal(double distance, double mass){
-		distance=Math.max((double)1,distance);
-		return Math.sqrt(SCALE*mass/distance);
-	}
-}
+ }
 

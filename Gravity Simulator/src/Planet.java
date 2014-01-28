@@ -33,8 +33,8 @@ public class Planet {
 		double distanceY = this.posY - to.posY;
 
 		double distance = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
-		double attraction = gravity.force(distance,this.mass,to.mass,this.radius + to.radius);
-		double potential = gravity.potential(distance,this.mass,to.mass,this.radius + to.radius);
+		double attraction = gravity.Force(distance,this.mass,to.mass,this.radius + to.radius);
+		double potential = gravity.Potential(distance,this.mass,to.mass,this.radius + to.radius);
 
  		this.deltaVelocityX -= (attraction * distanceX)/(distance * this.mass);
  		this.deltaVelocityY -= (attraction * distanceY)/(distance * this.mass);
@@ -55,8 +55,8 @@ public class Planet {
 	}
 
 	// get tangential velocity req to orbit a 'mass' from a 'distance
-	public double Centrifugal(double distance,double mass, Force gravity){
-		return gravity.centrifugal(distance,mass);
+	public double Centrifugal(double distance,double mass_planet, double mass_sun, Force gravity){
+		return gravity.Centrifugal(distance,mass_planet,mass_sun);
 	}
 }
 
