@@ -11,6 +11,7 @@ public class Planet {
 	public double deltaVelocityY = 0;
 	public double potential;
 	public Color colour; 
+	public boolean sun_flag=false;
 
 	public Planet (double x,double y,double radius,double mass, Color colour){
 		this.radius = radius;

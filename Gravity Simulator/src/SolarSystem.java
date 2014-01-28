@@ -95,13 +95,13 @@ public class SolarSystem {
 			colour=new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
 
 			// Set the first two up at nice spots and sizes, handy for debugging force behaviour
-			if (i == 0){
+			if (i == 0 && random_position_flag){
 				x = 3 * width / 8 ;
 				y = 3 * height / 8;
 				radius = 5;
 				colour=Color.YELLOW;
 			}
-			if (i == 1){
+			if (i == 1 && random_position_flag){
 				x = 5 * width / 8;
 				y = 5 * height / 8;
 				radius = 5;
@@ -121,7 +121,10 @@ public class SolarSystem {
 			this.total_mass += mass;
 			this.centreOfMass.posX = this.centre_of_mass_x+=(mass/total_mass)*(x-centre_of_mass_x);
 			this.centreOfMass.posY = this.centre_of_mass_y+=(mass/total_mass)*(y-centre_of_mass_y);
-	    	}
+			if (sun_flag && (i == numberOfPlanets -1) ){ // make it the last one so it renders on top
+				this.planets[i].sun_flag=true;
+			}
+		}
 
 		// do a dummy run to add up the potential energy at start
 		double potential_minimum=0;
@@ -134,11 +137,12 @@ public class SolarSystem {
 				this.planets[i].potential+=this_potential;
 				this.planets[j].potential+=this_potential;
 			}
-			if (i == 0){potential_minimum = this.planets[i].potential;} 
-			potential_minimum= Math.min(potential_minimum, this.planets[i].potential);
-			if (i == 0){potential_maximum = this.planets[i].potential;} 
-			potential_maximum= Math.max(potential_maximum, this.planets[i].potential);	
-
+			if (!planets[i].sun_flag){
+				if (i == 0){potential_minimum = this.planets[i].potential;} 
+				potential_minimum= Math.min(potential_minimum, this.planets[i].potential);
+				if (i == 0){potential_maximum = this.planets[i].potential;} 
+				potential_maximum= Math.max(potential_maximum, this.planets[i].potential);	
+			}
 			// zap the velocity and acceleration back to zero after the dummy run to get the potential
 			this.planets[i].velocityX=0;
 			this.planets[i].velocityY=0;
@@ -180,11 +184,13 @@ public class SolarSystem {
 					planets[i].mass/2 ;
 		}
 		if (!random_colour_flag){  
-			for(i = 0; i < numberOfPlanets-1; i++) {
-				double hue = (planets[i].potential - potential_minimum) / ( potential_maximum - potential_minimum);
-				double bright = 0.5 + ( (planets[i].potential - potential_minimum) / ( potential_maximum - potential_minimum)) * 0.5;
+			for(i = 0; i < numberOfPlanets; i++) {
+				if (!planets[i].sun_flag){
+					double hue = (planets[i].potential - potential_minimum) / ( potential_maximum - potential_minimum);
+					double bright = 0.5 + ( (planets[i].potential - potential_minimum) / ( potential_maximum - potential_minimum)) * 0.5;
 				
-				planets[i].colour=new Color(Color.HSBtoRGB((float)hue,(float)1,(float)bright));
+					planets[i].colour=new Color(Color.HSBtoRGB((float)hue,(float)1,(float)bright));
+				}
 			}
 		}
 		
