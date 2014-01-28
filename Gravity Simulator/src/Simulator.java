@@ -16,7 +16,7 @@ public class Simulator extends JPanel implements ActionListener {
   	public SolarSystem solarSystem;
 	private Timer timer;
 	private static int numberOfPlanets=400;	
-	private static int averageEnergy=400;
+	private static double averageEnergy=400;
 	private static boolean centrifugal_flag=true;
 	private static boolean sun_flag=true;
 	private static double sun_size=50000;
@@ -25,6 +25,7 @@ public class Simulator extends JPanel implements ActionListener {
 	private boolean random_colour_flag=true;
 	public String forceName="Normal";
 	public Force gravity=null;
+	public double forceOffset=0;
 	double top_loss=0;
 	double bot_loss=0;
 
@@ -91,8 +92,9 @@ public class Simulator extends JPanel implements ActionListener {
 		String[] force_names = {"InverseCube","Normal", "Mini","Sqrt","Sin","Constant","Log","SHM","Super","Super3"};
     		JComboBox force_names_field = new JComboBox(force_names);
 		    force_names_field.setSelectedItem(forceName);
+    		JTextField forceOffset_field = new JTextField(Double.toString(this.forceOffset));
     		JTextField numberOfPlanets_field = new JTextField(Integer.toString(this.numberOfPlanets));
-    		JTextField averageEnergy_field = new JTextField(Integer.toString(this.averageEnergy));
+    		JTextField averageEnergy_field = new JTextField(Double.toString(this.averageEnergy));
     		JTextField sun_size_field = new JTextField(Double.toString(this.sun_size));
     		JCheckBox centrifugal_flag_field = new JCheckBox("Centrifugal");
     		centrifugal_flag_field.setSelected(this.centrifugal_flag);
@@ -108,6 +110,8 @@ public class Simulator extends JPanel implements ActionListener {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		panel.add(new JLabel("Gravity Type (select your own gravity)"));
 		panel.add(force_names_field);
+		panel.add(new JLabel("Force offset"));
+		panel.add(forceOffset_field);		
 		panel.add(new JLabel("Number of Planets"));
 		panel.add(numberOfPlanets_field);
 		panel.add(new JLabel("Average Energy (increase to go faster)"));
@@ -124,7 +128,8 @@ public class Simulator extends JPanel implements ActionListener {
 					        JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			numberOfPlanets = Integer.parseInt(numberOfPlanets_field.getText());
-			averageEnergy = Integer.parseInt(averageEnergy_field.getText());
+			forceOffset = Double.parseDouble(forceOffset_field.getText());
+			averageEnergy = Double.parseDouble(averageEnergy_field.getText());
 			forceName=force_names_field.getSelectedItem().toString();
 			centrifugal_flag=centrifugal_flag_field.isSelected();
 			sun_flag=sun_flag_field.isSelected();
@@ -172,6 +177,7 @@ public class Simulator extends JPanel implements ActionListener {
 			gravity=new GravitySuper3();
 			break;
 	}
+	gravity.setOffset(forceOffset);
 
 	top_loss=bot_loss=0;
 	this.solarSystem = new SolarSystem(numberOfPlanets, 
