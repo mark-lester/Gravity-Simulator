@@ -111,8 +111,8 @@ public class SolarSystem {
 			mass = radius*radius*radius;
 
 			if (sun_flag && (i == numberOfPlanets -1) ){ // make it the last one so it renders on top
-				x=width/2;
-				y=height/2;
+				x=this.centre_of_mass_x;
+				y=this.centre_of_mass_y;
 				radius = 25;
 				mass = this.sun_size;
 				colour = Color.WHITE;
