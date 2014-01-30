@@ -1,3 +1,6 @@
+package force;
+
+
 public class GravityMini extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){

@@ -1,5 +1,8 @@
 import java.awt.*;
 
+import force.Force;
+
+
 public class SolarSystem {
 	private Planet[] planets;
 	private Planet centreOfMass;
@@ -153,7 +156,8 @@ public class SolarSystem {
 		// now we know the total energy, we can scale 
 		// else when you bump up the number of planets, 
 		// the energy in the system goes exponentially up and the animation goes bonkers.
-		Force.SCALE = averageEnergy * numberOfPlanets/this.potentialEnergy;
+		// square the number of planets as the total energy is tied up in X * X mutual attractions
+		Force.SCALE = averageEnergy * numberOfPlanets * numberOfPlanets / this.potentialEnergy;
 		this.potentialEnergy=averageEnergy * numberOfPlanets;
 
 		if (centrifugal_flag){  // get stuff to orbit the centre of mass, using the sun's mass as an attractor

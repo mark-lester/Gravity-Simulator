@@ -1,3 +1,5 @@
+package force;
+
 public class Force {
 public static double SCALE=1;
 public double solar_system_scale=1;

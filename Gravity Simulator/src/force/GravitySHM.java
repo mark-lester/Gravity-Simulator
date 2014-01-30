@@ -1,9 +1,13 @@
-public class GravitySuper3 extends Force {
+package force;
+
+
+public class GravitySHM extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
-		return SCALE * massA * massB * distance * distance * distance;
+		return SCALE * massA * massB * distance;
 	}
  	public double potential(double distance, double massA, double massB,double combined_radii){
-		return SCALE * massA * massB * distance * distance *distance *distance /4;
+		return SCALE * massA * massB * distance * distance /2;
 	}
 }
+

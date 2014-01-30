@@ -1,6 +1,19 @@
 import java.awt.*;
 import java.util.Formatter;
 import javax.swing.*;
+
+import force.Force;
+import force.GravityConstant;
+import force.GravityInverseCube;
+import force.GravityLog;
+import force.GravityMini;
+import force.GravityNormal;
+import force.GravitySHM;
+import force.GravitySin;
+import force.GravitySqrt;
+import force.GravitySuper;
+import force.GravitySuper3;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -15,11 +28,11 @@ public class Simulator extends JPanel implements ActionListener {
 	private int loop_counter=0;
   	public SolarSystem solarSystem;
 	private Timer timer;
-	private static int numberOfPlanets=400;	
-	private static double averageEnergy=400;
+	private static int numberOfPlanets=10;	
+	private static double averageEnergy=1;
 	private static boolean centrifugal_flag=true;
 	private static boolean sun_flag=true;
-	private static double sun_size=50000;
+	private static double sun_size=500000;
 	private boolean random_radii_flag=true;
 	private boolean random_position_flag=true;
 	private boolean random_colour_flag=true;
@@ -89,6 +102,7 @@ public class Simulator extends JPanel implements ActionListener {
 
    public boolean Dialogue(){
 	boolean change=false;
+	
 		String[] force_names = {"InverseCube","Normal", "Mini","Sqrt","Sin","Constant","Log","SHM","Super","Super3"};
     		JComboBox force_names_field = new JComboBox(force_names);
 		    force_names_field.setSelectedItem(forceName);
@@ -180,6 +194,7 @@ public class Simulator extends JPanel implements ActionListener {
 	gravity.setOffset(forceOffset);
 
 	top_loss=bot_loss=0;
+	loop_counter=0;
 	this.solarSystem = new SolarSystem(numberOfPlanets, 
 								BOX_HEIGHT,
 								BOX_WIDTH,

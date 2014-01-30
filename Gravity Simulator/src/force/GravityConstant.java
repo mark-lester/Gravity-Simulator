@@ -1,10 +1,13 @@
-public class GravitySuper extends Force {
+package force;
+
+
+public class GravityConstant extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
-		return SCALE * massA * massB * distance * distance ;
+		return SCALE * massA * massB;
 	}
  	public double potential(double distance, double massA, double massB,double combined_radii){
-		return SCALE * massA * massB * distance * distance * distance;
+		return SCALE * massA * massB * distance;
 	}
 }
 

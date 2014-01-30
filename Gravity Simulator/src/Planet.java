@@ -1,5 +1,8 @@
 import java.awt.*;
 
+import force.Force;
+
+
 public class Planet {
 	public double radius = 0; // Ball's radius
 	public double posX = 0; // Ball's center (x, y)
