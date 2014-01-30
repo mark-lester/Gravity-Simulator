@@ -7,7 +7,7 @@ public double offset=0;
 		return this.offset=offset;
 	}
 	
- 	public double Force(double distance, double massA, double massB,double combined_radii){
+ 	public double Attraction(double distance, double massA, double massB,double combined_radii){
 		return force(distance-offset, massA, massB,combined_radii);
 	}
  	public double Potential(double distance, double massA, double massB, double combined_radii){
@@ -17,7 +17,7 @@ public double offset=0;
 		return Math.sqrt(
 					Math.max(
 							0,	
-							distance * Force(distance,massA,massB,0)/ massA  
+							distance * Attraction(distance,massA,massB,0)/ massA  
 							)
 						);
 	}

@@ -33,7 +33,7 @@ public class Planet {
 		double distanceY = this.posY - to.posY;
 
 		double distance = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
-		double attraction = gravity.Force(distance,this.mass,to.mass,this.radius + to.radius);
+		double attraction = gravity.Attraction(distance,this.mass,to.mass,this.radius + to.radius);
 		double potential = gravity.Potential(distance,this.mass,to.mass,this.radius + to.radius);
 
  		this.deltaVelocityX -= (attraction * distanceX)/(distance * this.mass);
