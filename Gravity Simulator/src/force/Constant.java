@@ -4,10 +4,10 @@ package force;
 public class Constant extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
-		return SCALE * massA * massB;
+		return massA * massB;
 	}
  	public double potential(double distance, double massA, double massB,double combined_radii){
-		return SCALE * massA * massB * distance;
+		return massA * massB * distance;
 	}
 }
 

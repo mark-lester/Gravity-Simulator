@@ -1,13 +1,12 @@
 package force;
 
-
 public class Squared extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
-		return SCALE * massA * massB * distance * distance ;
+		return massA * massB * distance * distance ;
 	}
  	public double potential(double distance, double massA, double massB,double combined_radii){
-		return SCALE * massA * massB * distance * distance * distance;
+		return massA * massB * distance * distance * distance;
 	}
 }
 

@@ -106,7 +106,7 @@ public class Simulator extends JPanel implements ActionListener {
    public boolean Dialogue(){
 	boolean change=false;
 //	ArrayList<String> force_names = new ArrayList<String>();
-	String[] force_names = {"InverseCube","InverseSquare", "Inverse","InverseSquareRoot","SquareRoot","Sin","Constant","Log","DirectlyProportional","Squared","Cubed"};
+	String[] force_names = {"InverseCube","InverseSquare", "Inverse","InverseSquareRoot","SquareRoot","Sin","Constant","Log","DirectlyProportional","Squared","Cubed","Power4"};
 
     /*
 	try {
@@ -210,6 +210,9 @@ public class Simulator extends JPanel implements ActionListener {
 			break;
 		case "Cubed":
 			gravity=new Cubed();
+			break;
+		case "Power4":
+			gravity=new Power4();
 			break;
 	}
 	gravity.setOffset(forceOffset);
