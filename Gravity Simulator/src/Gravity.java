@@ -10,7 +10,7 @@ public class Gravity extends JFrame {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	width = (int)(screenSize.getWidth() * 9 / 10);
 	height = (int)(screenSize.getHeight() * 9 / 10);
-        add(new Simulator(9,width,height,"DirectlyProportional"));
+        add(new Simulator(9,width,height,"InverseSquare"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width,height);
         setLocationRelativeTo(null);
