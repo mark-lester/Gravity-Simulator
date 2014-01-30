@@ -1,23 +1,26 @@
 import java.awt.*;
 import java.util.Formatter;
 import javax.swing.*;
-
-import force.Force;
-import force.GravityConstant;
-import force.GravityInverseCube;
-import force.GravityLog;
-import force.GravityMini;
-import force.GravityNormal;
-import force.GravitySHM;
-import force.GravitySin;
-import force.GravitySqrt;
-import force.GravitySuper;
-import force.GravitySuper3;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import java.util.LinkedList;
+import org.reflections.*;
+import org.reflections.util.*;
+import org.reflections.scanners.*;
+
+import java.io.IOException;
+import java.io.File;
+import java.net.URL;
+
+import force.*;
+
 
 // Extends JPanel, so as to override the paintComponent() for custom rendering codes. 
 public class Simulator extends JPanel implements ActionListener {
@@ -102,8 +105,23 @@ public class Simulator extends JPanel implements ActionListener {
 
    public boolean Dialogue(){
 	boolean change=false;
+//	ArrayList<String> force_names = new ArrayList<String>();
+	String[] force_names = {"InverseCube","InverseSquare", "Inverse","InverseSquareRoot","SquareRoot","Sin","Constant","Log","DirectlyProportional","Squared","Cubed"};
+
+    /*
+	try {
+	  Class forces[]=getClasses("force");
+	  for (Class c : forces){
+		  force_names.add(c.getName());
+	  }	  
+	} catch (IOException e) {
+		;
+		//something freaked out reading classes
+	} catch (ClassNotFoundException e) {
+		;//something freaked out reading package
+	}
+	*/
 	
-		String[] force_names = {"InverseCube","Normal", "Mini","Sqrt","Sin","Constant","Log","SHM","Super","Super3"};
     		JComboBox force_names_field = new JComboBox(force_names);
 		    force_names_field.setSelectedItem(forceName);
     		JTextField forceOffset_field = new JTextField(Double.toString(this.forceOffset));
@@ -160,35 +178,38 @@ public class Simulator extends JPanel implements ActionListener {
    private void SetSolarSystem(){
 	switch (forceName){
 		case "Sin":
-			gravity=new GravitySin();
+			gravity=new Sin();
 			gravity.solar_system_scale=BOX_WIDTH/8;
 			break;
 		case "InverseCube":
-			gravity=new GravityInverseCube();
+			gravity=new InverseCube();
+			break;
+		case "InverseSquareRoot":
+			gravity=new InverseSquareRoot();
 			break;
 		case "Constant":
-			gravity=new GravityConstant();
+			gravity=new Constant();
 			break;
-		case "Normal":
-			gravity=new GravityNormal();
+		case "InverseSquare":
+			gravity=new InverseSquare();
 			break;
-		case "Sqrt":
-			gravity=new GravitySqrt();
+		case "SquareRoot":
+			gravity=new SquareRoot();
 			break;
-		case "SHM":
-			gravity=new GravitySHM();
+		case "DirectlyProportional":
+			gravity=new DirectlyProportional();
 			break;
-		case "Mini":
-			gravity=new GravityMini();
+		case "Inverse":
+			gravity=new Inverse();
 			break;
 		case "Log":
-			gravity=new GravityLog();
+			gravity=new Log();
 			break;
-		case "Super":
-			gravity=new GravitySuper();
+		case "Squared":
+			gravity=new Squared();
 			break;
-		case "Super3":
-			gravity=new GravitySuper3();
+		case "Cubed":
+			gravity=new Cubed();
 			break;
 	}
 	gravity.setOffset(forceOffset);
@@ -217,6 +238,39 @@ public class Simulator extends JPanel implements ActionListener {
 			SetSolarSystem();
 		}
 	}
-    }
-
+   }
+   
+   private static Class[] getClasses(String packageName) throws ClassNotFoundException, IOException {
+	     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+	     assert classLoader != null;
+	     String path = packageName.replace('.', '/');
+	     Enumeration<URL> resources = classLoader.getResources(path);
+	     List<File> dirs = new ArrayList<File>();
+	     while (resources.hasMoreElements()) {
+	    	 URL resource = resources.nextElement();
+	    	 dirs.add(new File(resource.getFile()));
+	     }
+	     ArrayList<Class> classes = new ArrayList<Class>();
+	     for (File directory : dirs) {
+	    	 classes.addAll(findClasses(directory, packageName));
+	     }
+	     return classes.toArray(new Class[classes.size()]);
+	}
+   
+   private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
+	   List<Class> classes = new ArrayList<Class>();
+	   if (!directory.exists()) {
+		   return classes;
+	   }
+	   File[] files = directory.listFiles();
+	   for (File file : files) {
+		   if (file.isDirectory()) {
+			   assert !file.getName().contains(".");
+			   classes.addAll(findClasses(file, packageName + "." + file.getName()));
+		   } else if (file.getName().endsWith(".class")) {
+			   classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+		   }
+	   }
+	   return classes;
+   }
 }

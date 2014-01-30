@@ -1,12 +1,13 @@
 package force;
 
 
-public class GravitySuper3 extends Force {
+public class Constant extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
-		return SCALE * massA * massB * distance * distance * distance;
+		return SCALE * massA * massB;
 	}
  	public double potential(double distance, double massA, double massB,double combined_radii){
-		return SCALE * massA * massB * distance * distance *distance *distance /4;
+		return SCALE * massA * massB * distance;
 	}
 }
+

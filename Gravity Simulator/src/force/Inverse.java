@@ -1,14 +1,14 @@
 package force;
 
 
-public class GravityMini extends Force {
+public class Inverse extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
- 		distance=Math.max((double)1, distance);
+ 		distance=Math.copySign(Math.max(SMALL, Math.abs(distance)),distance);
  		return SCALE * massA * massB / distance; 
 	}
  	public double potential(double distance, double massA, double massB,double combined_radii){
- 		distance=Math.max((double)1, distance);
+ 		distance=Math.copySign(Math.max(SMALL, Math.abs(distance)),distance);
 		return SCALE * massA * massB * Math.log(distance);
 	}
  }

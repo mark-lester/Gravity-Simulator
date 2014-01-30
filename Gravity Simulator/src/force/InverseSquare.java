@@ -1,7 +1,7 @@
 package force;
 
 
-public class GravityNormal extends Force {
+public class InverseSquare extends Force {
 	
  	public double force(double distance, double massA, double massB, double combined_radii){
  		distance=Math.max(combined_radii, distance);

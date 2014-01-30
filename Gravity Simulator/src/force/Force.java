@@ -2,6 +2,7 @@ package force;
 
 public class Force {
 public static double SCALE=1;
+public static double SMALL=0.001;
 public double solar_system_scale=1;
 public double offset=0;
 
