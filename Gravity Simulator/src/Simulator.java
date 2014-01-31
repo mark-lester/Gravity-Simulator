@@ -17,9 +17,12 @@ import org.reflections.scanners.*;
 
 import java.io.IOException;
 import java.io.File;
+import java.nio.file.*;
 import java.net.URL;
+import java.nio.file.DirectoryStream;
 
 import force.*;
+
 
 
 // Extends JPanel, so as to override the paintComponent() for custom rendering codes. 
@@ -105,8 +108,7 @@ public class Simulator extends JPanel implements ActionListener {
 
    public boolean Dialogue(){
 	boolean change=false;
-//	ArrayList<String> force_names = new ArrayList<String>();
-//	String[] force_names = {"Atomic","InverseCube","InverseSquare", "Inverse","InverseSquareRoot","SquareRoot","Sin","Constant","Log","DirectlyProportional","Squared","Cubed","Power4","Quadratic"};
+	ArrayList<String> force_names_array = new ArrayList<String>();
 	String[] force_names = {
 						"InverseCube",
 						"InverseSquare", 
@@ -123,19 +125,10 @@ public class Simulator extends JPanel implements ActionListener {
 						"Quadratic"
 						};
 
-    /*
-	try {
-	  Class forces[]=getClasses("force");
-	  for (Class c : forces){
-		  force_names.add(c.getName());
-	  }	  
-	} catch (IOException e) {
-		;
-		//something freaked out reading classes
-	} catch (ClassNotFoundException e) {
-		;//something freaked out reading package
-	}
-	*/
+    
+	
+//  ArrayList classNames=getClasses("force");
+	
 	
 		JComboBox force_names_field = new JComboBox(force_names);
     	force_names_field.setSelectedItem(forceName);
@@ -229,37 +222,18 @@ public class Simulator extends JPanel implements ActionListener {
 	}
    }
    
-   private static Class[] getClasses(String packageName) throws ClassNotFoundException, IOException {
-	     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-	     assert classLoader != null;
-	     String path = packageName.replace('.', '/');
-	     Enumeration<URL> resources = classLoader.getResources(path);
-	     List<File> dirs = new ArrayList<File>();
-	     while (resources.hasMoreElements()) {
-	    	 URL resource = resources.nextElement();
-	    	 dirs.add(new File(resource.getFile()));
-	     }
-	     ArrayList<Class> classes = new ArrayList<Class>();
-	     for (File directory : dirs) {
-	    	 classes.addAll(findClasses(directory, packageName));
-	     }
-	     return classes.toArray(new Class[classes.size()]);
-	}
    
-   private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
-	   List<Class> classes = new ArrayList<Class>();
-	   if (!directory.exists()) {
-		   return classes;
-	   }
-	   File[] files = directory.listFiles();
-	   for (File file : files) {
-		   if (file.isDirectory()) {
-			   assert !file.getName().contains(".");
-			   classes.addAll(findClasses(file, packageName + "." + file.getName()));
-		   } else if (file.getName().endsWith(".class")) {
-			   classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+   private static ArrayList <String> getClasses(String packageName) {
+	   ArrayList <String> classNames=new ArrayList<String>();
+	   File folder = new File(packageName);
+	   File[] listOfFiles = folder.listFiles();
+
+	   for (File file : listOfFiles) {
+		   if (file.isFile() && file.getName().endsWith(".class")) {
+			   classNames.add(file.getName().substring(0, file.getName().length() - 6));
 		   }
-	   }
-	   return classes;
-   }
+		}
+	    return classNames; 
+    }
+   
 }
