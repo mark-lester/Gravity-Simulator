@@ -106,7 +106,22 @@ public class Simulator extends JPanel implements ActionListener {
    public boolean Dialogue(){
 	boolean change=false;
 //	ArrayList<String> force_names = new ArrayList<String>();
-	String[] force_names = {"InverseCube","InverseSquare", "Inverse","InverseSquareRoot","SquareRoot","Sin","Constant","Log","DirectlyProportional","Squared","Cubed","Power4"};
+//	String[] force_names = {"Atomic","InverseCube","InverseSquare", "Inverse","InverseSquareRoot","SquareRoot","Sin","Constant","Log","DirectlyProportional","Squared","Cubed","Power4","Quadratic"};
+	String[] force_names = {
+						"InverseCube",
+						"InverseSquare", 
+						"Inverse",
+						"InverseSquareRoot",
+						"SquareRoot",
+						"Sin",
+						"Constant",
+						"Log",
+						"DirectlyProportional",
+						"Squared",
+						"Cubed",
+						"Power4",
+						"Quadratic"
+						};
 
     /*
 	try {
@@ -122,22 +137,22 @@ public class Simulator extends JPanel implements ActionListener {
 	}
 	*/
 	
-    		JComboBox force_names_field = new JComboBox(force_names);
-		    force_names_field.setSelectedItem(forceName);
-    		JTextField forceOffset_field = new JTextField(Double.toString(this.forceOffset));
-    		JTextField numberOfPlanets_field = new JTextField(Integer.toString(this.numberOfPlanets));
-    		JTextField averageEnergy_field = new JTextField(Double.toString(this.averageEnergy));
-    		JTextField sun_size_field = new JTextField(Double.toString(this.sun_size));
-    		JCheckBox centrifugal_flag_field = new JCheckBox("Centrifugal");
-    		centrifugal_flag_field.setSelected(this.centrifugal_flag);
-    		JCheckBox sun_flag_field = new JCheckBox("Sun");
-    		sun_flag_field.setSelected(this.sun_flag);
-    		JCheckBox random_radii_flag_field = new JCheckBox("Random Radii");
-    		random_radii_flag_field.setSelected(this.random_radii_flag);
-    		JCheckBox random_position_flag_field = new JCheckBox("Random Position");
-    		random_position_flag_field.setSelected(this.random_position_flag);
-    		JCheckBox random_colour_flag_field = new JCheckBox("Random Colour");
-    		random_colour_flag_field.setSelected(this.random_colour_flag);
+		JComboBox force_names_field = new JComboBox(force_names);
+    	force_names_field.setSelectedItem(forceName);
+    	JTextField forceOffset_field = new JTextField(Double.toString(this.forceOffset));
+    	JTextField numberOfPlanets_field = new JTextField(Integer.toString(this.numberOfPlanets));
+    	JTextField averageEnergy_field = new JTextField(Double.toString(this.averageEnergy));
+    	JTextField sun_size_field = new JTextField(Double.toString(this.sun_size));
+    	JCheckBox centrifugal_flag_field = new JCheckBox("Centrifugal");
+    	centrifugal_flag_field.setSelected(this.centrifugal_flag);
+    	JCheckBox sun_flag_field = new JCheckBox("Sun");
+    	sun_flag_field.setSelected(this.sun_flag);
+    	JCheckBox random_radii_flag_field = new JCheckBox("Random Radii");
+    	random_radii_flag_field.setSelected(this.random_radii_flag);
+    	JCheckBox random_position_flag_field = new JCheckBox("Random Position");
+    	random_position_flag_field.setSelected(this.random_position_flag);
+    	JCheckBox random_colour_flag_field = new JCheckBox("Random Colour");
+    	random_colour_flag_field.setSelected(this.random_colour_flag);
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		panel.add(new JLabel("Gravity Type (select your own gravity)"));
@@ -176,45 +191,17 @@ public class Simulator extends JPanel implements ActionListener {
    }
 
    private void SetSolarSystem(){
-	switch (forceName){
-		case "Sin":
-			gravity=new Sin();
-			gravity.solar_system_scale=BOX_WIDTH/8;
-			break;
-		case "InverseCube":
-			gravity=new InverseCube();
-			break;
-		case "InverseSquareRoot":
-			gravity=new InverseSquareRoot();
-			break;
-		case "Constant":
-			gravity=new Constant();
-			break;
-		case "InverseSquare":
-			gravity=new InverseSquare();
-			break;
-		case "SquareRoot":
-			gravity=new SquareRoot();
-			break;
-		case "DirectlyProportional":
-			gravity=new DirectlyProportional();
-			break;
-		case "Inverse":
-			gravity=new Inverse();
-			break;
-		case "Log":
-			gravity=new Log();
-			break;
-		case "Squared":
-			gravity=new Squared();
-			break;
-		case "Cubed":
-			gravity=new Cubed();
-			break;
-		case "Power4":
-			gravity=new Power4();
-			break;
-	}
+	String full_path = "force."+forceName;
+	try {
+		gravity = (Force) Class.forName(full_path).newInstance();
+	}  catch (ClassNotFoundException e) {
+		System.err.println("Can't get class "+full_path);
+	}  catch (InstantiationException e) {
+		System.err.println("Can't instantiate class "+full_path);
+	}  catch (IllegalAccessException e) {
+		System.err.println("Can't access class "+full_path);
+	}  
+	gravity.solar_system_scale=BOX_WIDTH/8;
 	gravity.setOffset(forceOffset);
 
 	top_loss=bot_loss=0;
@@ -231,7 +218,6 @@ public class Simulator extends JPanel implements ActionListener {
 								random_position_flag,
 								random_colour_flag);
    }
-
 
    private class TAdapter extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
