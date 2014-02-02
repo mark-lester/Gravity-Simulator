@@ -44,7 +44,7 @@ public class Planet {
  		to.deltaVelocityX += (attraction * distanceX)/(distance * to.mass);
  		to.deltaVelocityY += (attraction * distanceY)/(distance * to.mass);
 		return potential;
-	}
+	}	
 
 	// execute the movement
 	public void Move(){
