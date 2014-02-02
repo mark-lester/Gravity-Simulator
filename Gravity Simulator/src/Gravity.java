@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 import java.awt.Toolkit;
 import java.awt.Dimension;
-
+// hello
 public class Gravity extends JFrame {
 	public static int width;
 	public static int height;
