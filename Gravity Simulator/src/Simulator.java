@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 import java.util.LinkedList;
 import org.reflections.*;
@@ -57,7 +60,8 @@ public class Simulator extends JPanel implements ActionListener {
 		SetSolarSystem();
 	 	setPreferredSize(new Dimension(BOX_WIDTH, BOX_HEIGHT));
 		addKeyListener(new TAdapter());
-        	setFocusable(true);
+		addMouseListener(new MAdapter());
+        setFocusable(true);
 		timer = new Timer(1000 / UPDATE_RATE, this);
 		timer.start();
 	}
@@ -116,6 +120,7 @@ public class Simulator extends JPanel implements ActionListener {
 						"InverseSquareRoot",
 						"SquareRoot",
 						"Sin",
+						"Arctan",
 						"Constant",
 						"Log",
 						"DirectlyProportional",
@@ -215,12 +220,21 @@ public class Simulator extends JPanel implements ActionListener {
    private class TAdapter extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-//dont care, just hit the key booard
+//dont care, just hit the key board
 		if (Dialogue()){
 			SetSolarSystem();
 		}
 	}
    }
+   
+   private class MAdapter extends MouseAdapter {
+       public void mousePressed(MouseEvent me) {	
+		if (Dialogue()){
+			SetSolarSystem();
+		}
+	}
+  }
+
    
    
    private static ArrayList <String> getClasses(String packageName) {
